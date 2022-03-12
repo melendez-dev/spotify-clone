@@ -6,6 +6,8 @@ export function UseAuth (code) {
   const [refreshToken, setRefreshToken] = useState()
   const [expiresIn, setExpiresIn] = useState()
 
+  console.log(refreshToken)
+
   // localhost:3001/login => sever/index.js
   useEffect(async () => {
     try {
@@ -23,8 +25,8 @@ export function UseAuth (code) {
 
   // localhost:3001/refresh => server/index.js
   useEffect(async () => {
-    if (!refreshToken || expiresIn) return
-    const timeout = setInterval(async () => {
+    if (!refreshToken || !expiresIn) return
+    const interval = setInterval(async () => {
       try {
         const res = await axios.post('http://localhost:3001/refresh', {
           refreshToken
@@ -35,6 +37,7 @@ export function UseAuth (code) {
         window.location = '/'
       }
     }, (expiresIn - 60) * 1000)
-    return () => clearInterval(timeout)
+    return () => setInterval(interval)
   }, [refreshToken, expiresIn])
+  return accessToken
 }
