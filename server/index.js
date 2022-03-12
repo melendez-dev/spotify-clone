@@ -13,7 +13,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
 // login
 app.post('/login', async (req, res) => {
   const code = req.body.code
@@ -47,8 +46,8 @@ app.post('/refresh', async (req, res) => {
   try {
     const data = await spotifyApi.refreshAccessToken()
     res.json({
-      accessToken: data.body.access_token,
-      expiresIn: data.body.expires_in
+      accessToken: data.body.accessToken,
+      expiresIn: data.body.expiresIn
     })
   } catch (error) {
     console.error(error)
