@@ -32,7 +32,7 @@ const ToggleDarkMode = () => {
           onClick={toggleColorMode}
           icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
           size='lg'
-          boxSize='60px'
+          boxSize='50px'
           isRound='true'
           alignSelf='flex-end'
         />
