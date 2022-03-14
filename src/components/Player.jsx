@@ -1,12 +1,15 @@
 import SpotifyPlayer from 'react-spotify-web-playback'
-const Player = ({ accessToken, trackUri }) => {
-  if (!accessToken) return null
+const Player = ({ accessToken, trackUri, bg }) => {
+  const autoPlay = true
   return (
     <SpotifyPlayer
-      play={true}
+      autoPlay={autoPlay}
       token={accessToken}
       showSaveIcon
       uris={trackUri ? [trackUri] : []}
+      styles={{
+        bgColor: { bg }
+      }}
     />
   )
 }

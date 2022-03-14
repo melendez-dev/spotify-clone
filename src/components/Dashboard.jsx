@@ -1,5 +1,5 @@
 // import @chakra-ui
-import { Box, Heading, InputGroup, Input, InputLeftElement, useColorModeValue, Flex, useToast } from '@chakra-ui/react'
+import { Box, Heading, InputGroup, Input, InputLeftElement, useColorModeValue, Flex, useToast, Center, Text } from '@chakra-ui/react'
 // import react and icons
 import { useState, useEffect } from 'react'
 import { FaSearch } from 'react-icons/fa'
@@ -44,7 +44,6 @@ const Dashboard = ({ code }) => {
     // if there is not a value in the input.value put a []
     if (!search) return setSearchResults([])
     if (!accessToken) return
-    let cancel = false
     spotifyApi.searchTracks(search).then(res => {
       // if there is not a tracks trow a alert
       if (res.body.tracks.items.length === 0) {
@@ -55,7 +54,6 @@ const Dashboard = ({ code }) => {
           isClosable: true
         })
       }
-      if (cancel) return
       setSearchResults(res.body.tracks.items.map(track => {
         const smallestAlbumImages = track.album.images.reduce((smallest, image) => {
           if (image.height < smallest.height) return image
@@ -69,7 +67,6 @@ const Dashboard = ({ code }) => {
         }
       }))
     })
-    return () => cancel = true
   }
 
   return (
@@ -97,9 +94,8 @@ const Dashboard = ({ code }) => {
           <TrackResults track={track} key={track.uri} chooseTrack={chooseTrack} />
         ))}
       </Box>
-      <Box pos='fixed' bottom='0'>
-        Playing
-        { /*<Player accessToken={accessToken} trackUri={playing?.uri} /> */}
+      <Box pos='fixed' bottom='0' w='100%' left='0'>
+        <Player accessToken={accessToken} trackUri={playing?.uri} bg={bg} />
       </Box>
     </Flex>
   )
