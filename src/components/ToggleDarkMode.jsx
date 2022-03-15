@@ -1,4 +1,4 @@
-// import @chakra-ui
+// import chakra-ui
 import { useColorMode, IconButton, Box, Flex, Spacer, Link } from '@chakra-ui/react'
 // import icons
 import { FaMoon, FaSun, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'

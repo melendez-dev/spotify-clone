@@ -1,7 +1,7 @@
 // import chakra
 import { Flex, Image, Heading, Text, Box } from '@chakra-ui/react'
 import React from 'react'
-
+// to pass that function to onclick
 const TrackResults = ({ track, chooseTrack }) => {
   function handlePlay () {
     chooseTrack(track)

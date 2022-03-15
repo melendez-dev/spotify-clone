@@ -1,14 +1,14 @@
 // import @chakra-ui
-import { Box, Heading, InputGroup, Input, InputLeftElement, useColorModeValue, Flex, useToast, Center, Text } from '@chakra-ui/react'
+import { Box, Heading, InputGroup, Input, InputLeftElement, useColorModeValue, Flex, useToast } from '@chakra-ui/react'
 // import react and icons
 import { useState, useEffect } from 'react'
 import { FaSearch } from 'react-icons/fa'
 // import auth to spotify
-import { UseAuth } from './UseAuth'
+import { authorization } from './authorization'
 import SpotifyWebApi from 'spotify-web-api-node'
 // import components
 import TrackResults from './TrackResults'
-import Player from './Player'
+import OneTrack from './OneTrack'
 // import env to clientId
 import { CLIENT_ID } from '../../env'
 
@@ -19,17 +19,22 @@ const spotifyApi = new SpotifyWebApi({
 const Dashboard = ({ code }) => {
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  // playing => tracksSelected
   const [playing, setPlaying] = useState()
-  const accessToken = UseAuth(code)
+  const accessToken = authorization(code)
   // change the bagraoundColor in the dark mode
   const bg = useColorModeValue('gray.50', 'gray.800')
-  // component of @chakra-ui to simule an alert
+  // component of chakra-ui to simule an alert
   const toast = useToast()
-
   // fuction chooseTrack
   function chooseTrack (track) {
     setPlaying(track)
     setSearch('')
+  }
+  console.log(playing?.uri)
+  // clear track
+  function clearTrack () {
+    setPlaying(undefined)
   }
   // useEffect
   useEffect(async () => {
@@ -55,6 +60,7 @@ const Dashboard = ({ code }) => {
         })
       }
       setSearchResults(res.body.tracks.items.map(track => {
+        console.log(track)
         const smallestAlbumImages = track.album.images.reduce((smallest, image) => {
           if (image.height < smallest.height) return image
           return smallest
@@ -63,12 +69,13 @@ const Dashboard = ({ code }) => {
           artist: track.artists[0].name,
           title: track.name,
           uri: track.uri,
+          imageLG: track.album.images[1].url,
           albumUrl: smallestAlbumImages.url
         }
       }))
+      setPlaying(undefined)
     })
   }
-
   return (
     <Flex m={2} direction='column' py={2} h='80vh' overflow='hidden'>
       <Heading fontSize='5xl' fontWeight='extrabold'>
@@ -89,13 +96,13 @@ const Dashboard = ({ code }) => {
           />
         </InputGroup>
       </form>
-      <Box flexGrow='1' my={2} overflowY='auto'>
-        {searchResults.map((track) => (
-          <TrackResults track={track} key={track.uri} chooseTrack={chooseTrack} />
-        ))}
-      </Box>
-      <Box pos='fixed' bottom='0' w='100%' left='0'>
-        <Player accessToken={accessToken} trackUri={playing?.uri} bg={bg} />
+      <Box flexGrow='1' overflowY='auto'>
+        {playing
+          ? <OneTrack trackSelected={playing} clearTrack={clearTrack} />
+          : searchResults.map((track) => (
+            <TrackResults track={track} key={track.uri} chooseTrack={chooseTrack} />
+          ))}
+        {}
       </Box>
     </Flex>
   )
