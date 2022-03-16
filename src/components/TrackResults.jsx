@@ -7,7 +7,7 @@ const TrackResults = ({ track, chooseTrack }) => {
     chooseTrack(track)
   }
   return (
-    <Flex m={2} alignItems='center' cursor='pointer' onClick={handlePlay}>
+    <Flex m={2} alignItems='center' cursor='pointer' onClick={handlePlay} data-testid="tracks-resulst">
       <Image src={track.albumUrl} alt={track.artists} borderRadius='full' />
       <Box ml={2}>
         <Heading size='md'> {track.title} </Heading>

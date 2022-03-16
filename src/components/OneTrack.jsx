@@ -9,7 +9,7 @@ const OneTrack = ({ trackSelected, clearTrack }) => {
     <Container mt={5}>
       <Grid alignItems='center' justifyContent='center' templateColumns='repeat(3, 1fr)'>
         <GridItem>
-          <IconButton icon={<BsArrowDownSquareFill />} isRound='true' onClick={handleClear} />
+          <IconButton icon={<BsArrowDownSquareFill />} isRound='true' onClick={handleClear} data-testid="buttonDown"/>
         </GridItem>
         <GridItem>
           <Heading size='md' alignSelf='center' pl={5} textAlign='center' mt={1}>
@@ -27,7 +27,7 @@ const OneTrack = ({ trackSelected, clearTrack }) => {
           </Heading>
         </GridItem>
         <GridItem justifySelf='center' mt={2}>
-          <Link href={trackSelected.uri}>
+          <Link href={trackSelected.uri} data-testid="linkHrefSpotify">
             <IconButton icon={<BsFillPlayCircleFill />} isRound='true' />
           </Link>
         </GridItem>

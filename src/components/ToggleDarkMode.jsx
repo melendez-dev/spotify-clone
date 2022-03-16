@@ -30,6 +30,7 @@ const ToggleDarkMode = () => {
       <Box>
         <IconButton
           onClick={toggleColorMode}
+          data-testid="toggleDarkMode"
           icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
           size='lg'
           boxSize='50px'
