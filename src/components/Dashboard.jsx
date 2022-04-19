@@ -79,7 +79,7 @@ const Dashboard = ({ code }) => {
   return (
     <Flex m={2} direction='column' py={2} h='80vh' overflow='hidden'>
       <Heading fontSize='5xl' fontWeight='extrabold'>
-        Searchs
+        Search
       </Heading>
       <form onSubmit={handleSubmit}>
         <InputGroup>
